@@ -4,11 +4,13 @@
     <p>{{ msg }}</p>
     <p>{{ msg2 }}</p>
     <p>{{ msg3 }}</p>
+    <p>{{ add }}</p>
+    <p>{{ double }}</p>
     <button @click="changeData">change</button>
   </div>
 </template>
 <script>
-import { reactive, ref, toRefs } from "@vue/composition-api";
+import { computed, reactive, ref, toRefs } from "@vue/composition-api";
 export default {
   /**
    * vue2.x
@@ -24,6 +26,9 @@ export default {
   setup() {
     const state = reactive({
       msg2: "你是一个坏蛋",
+      double: computed(() => {
+        return state.msg2 + state.msg2;
+      }),
     });
     // return state;
     const msg3 = ref("加油！！");
@@ -33,10 +38,15 @@ export default {
       state.msg2 = "你是一个大坏蛋";
       msg3.value = "雅玛多"; // 显式修改
     };
+    // computed
+    const add = computed(() => {
+      return state.msg2 + msg3.value;
+    });
     return {
       msg3,
       ...toRefs(state),
       changeData,
+      add,
     };
   },
 };
