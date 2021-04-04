@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import { computed, reactive, ref, toRefs } from "@vue/composition-api";
+import { computed, reactive, ref, toRefs, watch } from "@vue/composition-api";
 export default {
   /**
    * vue2.x
@@ -42,6 +42,13 @@ export default {
     const add = computed(() => {
       return state.msg2 + msg3.value;
     });
+    // watch
+    watch(
+      () => state.msg2,
+      (newValue, oldeValue) => {
+        console.log(newValue, oldeValue);
+      }
+    );
     return {
       msg3,
       ...toRefs(state),
